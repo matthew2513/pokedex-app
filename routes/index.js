@@ -5,16 +5,22 @@ const router = express.Router();
 
 const API_URL = "https://pokeapi.co/api/v2/";
 
-router.get("/", async (req, res) => {
+router.get("/", (req, res) => {
+  res.render("index");
+});
+
+//fetch pokemon list
+router.get("/api/pokemon", async (req, res) => {
+  const offset = parseInt(req.query.offset) || 0;
   const limit = parseInt(req.query.limit) || 20;
 
-  if (isNaN(limit) || limit <= 0) {
-    return res.status(400).json({ error: "Invalid limit value" });
+  if (isNaN(limit) || limit <= 0 || isNaN(offset) || offset < 0) {
+    return res.status(400).json({ error: "Invalid limit or offset value" });
   }
 
   try {
     const response = await axios.get(`${API_URL}pokemon`, {
-      params: { limit },
+      params: { limit, offset },
     });
     const pokemonList = response.data.results;
 
@@ -42,8 +48,9 @@ router.get("/", async (req, res) => {
         }
       })
     );
+    console.log(pokemonDetails);
 
-    res.json({ pokemonDetails }); //send to frontend
+    res.json(pokemonDetails);
   } catch (error) {
     console.error("Failed to make request: ", error.message);
     res.status(500).json({ error: "Error fetching Pokémon data" });
