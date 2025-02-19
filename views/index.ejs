@@ -1,0 +1,23 @@
+<%- include("./partials/header.ejs") %>
+
+<main>
+  <div class="container text-center">
+    <ul
+      class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3 pokemon-container"
+    ></ul>
+    <!-- insert li here -->
+  </div>
+  <div class="container text-center mt-5">
+    <button
+      id="load-more"
+      type="button"
+      class="btn btn-outline-primary d-grid gap-2 col-4 mx-auto"
+    >
+      Load more Pokémon
+    </button>
+  </div>
+</main>
+
+<script src="/js/script.js"></script>
+
+<%- include("./partials/footer.ejs") %>

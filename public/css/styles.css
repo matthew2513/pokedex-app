@@ -1,0 +1,25 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.pokedex {
+  width: 2.5rem;
+  height: 2rem;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+.card-title,
+.card-text {
+  text-transform: capitalize;
+}

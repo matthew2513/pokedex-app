@@ -37,7 +37,6 @@ function displayPokemon(pokemonDetails) {
 // Load initial Pokémon
 fetchPokemon();
 
-// Load More Button Click Event
 loadMoreButton.addEventListener("click", () => {
   offset += limit;
   fetchPokemon();
