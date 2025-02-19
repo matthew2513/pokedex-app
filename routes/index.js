@@ -32,11 +32,13 @@ router.get("/api/pokemon", async (req, res) => {
           const response = await axios.get(pokemon.url);
 
           const {
+            id,
             sprites: { front_default },
             types,
           } = response.data;
 
           return {
+            id,
             name: pokemon.name,
             image: front_default,
             types: types.map((t) => t.type.name),
@@ -72,14 +74,39 @@ router.get("/search/:pokemon", async (req, res) => {
     const data = response.data;
 
     const pokemonDetails = {
+      id: data.id,
       name: data.name,
-      sprite: data.sprites.front_default,
+      image: data.sprites.front_default,
       types: data.types.map((typeInfo) => typeInfo.type.name),
     };
 
-    console.log(pokemonDetails);
+    // console.log(pokemonDetails);
 
     res.json(pokemonDetails);
+  } catch (error) {
+    console.error("Failed to fetch Pokémon: ", error.message);
+    res.status(404).json({ error: "Pokémon not found" });
+  }
+});
+
+router.get("/pokemon/:id", async (req, res) => {
+  const pokemonId = req.params.id;
+
+  try {
+    const response = await axios.get(`${API_URL}pokemon/${pokemonId}`);
+    const data = response.data;
+
+    const pokemonDetails = {
+      name: data.name,
+      height: data.height,
+      weight: data.weight,
+      abilities: data.abilities,
+      stats: data.stats,
+      image: data.sprites.front_default,
+      types: data.types.map((typeInfo) => typeInfo.type.name),
+    };
+
+    res.render("pokemon", { pokemonDetails });
   } catch (error) {
     console.error("Failed to fetch Pokémon: ", error.message);
     res.status(404).json({ error: "Pokémon not found" });

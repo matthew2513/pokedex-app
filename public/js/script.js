@@ -41,11 +41,15 @@ async function fetchPokemonByName(name) {
     li.classList.add("col");
     li.innerHTML = `
       <div class="card p-3 shadow-sm"> 
-        <img src="${pokemon.sprite}" alt="${pokemon.name}" class="card-img-top">
-        <div class="card-body">
-          <h5 class="card-title text-capitalize">${pokemon.name}</h5>
-          <p class="card-text">Type: ${pokemon.types.join(", ")}</p>
-        </div>
+        <a href="/pokemon/${pokemon.id}">
+          <img src="${pokemon.image}" alt="${
+      pokemon.name
+    }" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">${pokemon.name}</h5>
+            <p class="card-text">Type: ${pokemon.types.join(", ")}</p>
+          </div>
+        </a>
       </div>
     `;
 
@@ -69,11 +73,15 @@ function displayPokemon(pokemonList, appendMode = false) {
     li.classList.add("col");
     li.innerHTML = `
       <div class="card p-3 shadow-sm"> 
-        <img src="${pokemon.image}" alt="${pokemon.name}" class="card-img-top">
-        <div class="card-body">
-          <h5 class="card-title">${pokemon.name}</h5>
-          <p class="card-text">Type: ${pokemon.types.join(", ")}</p>
-        </div>
+        <a href="/pokemon/${pokemon.id}">
+          <img src="${pokemon.image}" alt="${
+      pokemon.name
+    }" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">${pokemon.name}</h5>
+            <p class="card-text">Type: ${pokemon.types.join(", ")}</p>
+          </div>
+        </a>
       </div>
     `;
     pokemonContainer.appendChild(li);
@@ -95,7 +103,7 @@ searchForm.addEventListener("submit", (event) => {
 // Restore default list when clearing input
 searchInput.addEventListener("input", () => {
   if (searchInput.value.trim() === "") {
-    displayPokemon(defaultPokemonList, false);
+    displayPokemon(defaultPokemonList, true);
 
     loadMoreButton.classList.add("d-none");
   }
