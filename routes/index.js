@@ -24,6 +24,8 @@ router.get("/api/pokemon", async (req, res) => {
     });
     const pokemonList = response.data.results;
 
+    // console.log(pokemonList);
+
     const pokemonDetails = await Promise.all(
       pokemonList.map(async (pokemon) => {
         try {
@@ -48,12 +50,39 @@ router.get("/api/pokemon", async (req, res) => {
         }
       })
     );
-    console.log(pokemonDetails);
+    // console.log(pokemonDetails);
 
     res.json(pokemonDetails);
   } catch (error) {
     console.error("Failed to make request: ", error.message);
     res.status(500).json({ error: "Error fetching Pokémon data" });
+  }
+});
+
+//search pokemon
+router.get("/search/:pokemon", async (req, res) => {
+  const pokemonName = req.params.pokemon.toLowerCase();
+
+  if (!pokemonName) {
+    return res.status(400).json({ error: "Please enter a Pokémon name" });
+  }
+
+  try {
+    const response = await axios.get(`${API_URL}pokemon/${pokemonName}`);
+    const data = response.data;
+
+    const pokemonDetails = {
+      name: data.name,
+      sprite: data.sprites.front_default,
+      types: data.types.map((typeInfo) => typeInfo.type.name),
+    };
+
+    console.log(pokemonDetails);
+
+    res.json(pokemonDetails);
+  } catch (error) {
+    console.error("Failed to fetch Pokémon: ", error.message);
+    res.status(404).json({ error: "Pokémon not found" });
   }
 });
 
