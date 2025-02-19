@@ -1,0 +1,44 @@
+<%- include("./partials/header.ejs") %>
+
+<main>
+  <div class="container text-center view-pokemon">
+    <h1 class="text-center"><%= pokemonDetails.name %></h1>
+    <div class="text-center">
+      <img
+        src="<%= pokemonDetails.image %>"
+        alt="<%= pokemonDetails.name %>"
+        class="img-fluid pokemon-image"
+      />
+    </div>
+    <ul class="list-group mt-3">
+      <li class="list-group-item">
+        <strong>Height:</strong> <%= pokemonDetails.height %>
+      </li>
+      <li class="list-group-item">
+        <strong>Weight:</strong> <%= pokemonDetails.weight %>
+      </li>
+      <li class="list-group-item">
+        <strong>Abilities:</strong>
+        <%= pokemonDetails.abilities.map(ability =>
+        ability.ability.name).join(', ') %>
+      </li>
+      <li class="list-group-item">
+        <strong>Types:</strong>
+        <%= pokemonDetails.types.join(', ') %>
+      </li>
+      <li class="list-group-item">
+        <strong>Stats:</strong>
+        <ul>
+          <% pokemonDetails.stats.forEach(stat => { %>
+          <li><%= stat.stat.name %>: <%= stat.base_stat %></li>
+          <% }); %>
+        </ul>
+      </li>
+    </ul>
+    <a href="/" class="btn btn-primary mt-3">Back</a>
+  </div>
+</main>
+
+<script src="/js/script.js"></script>
+
+<%- include("./partials/footer.ejs") %>

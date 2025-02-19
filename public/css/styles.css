@@ -19,7 +19,17 @@ ul {
   list-style: none;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+}
+
 .card-title,
-.card-text {
+.card-text,
+.view-pokemon {
   text-transform: capitalize;
+}
+
+.pokemon-image {
+  width: 200px;
 }
